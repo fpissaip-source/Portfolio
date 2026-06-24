@@ -1,0 +1,46 @@
+.landing-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.landing-container {
+  position: relative;
+  z-index: 6;
+  width: var(--cWidth);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.landing-intro h1 {
+  font-size: 12vw;
+  line-height: 0.9;
+  margin: 0;
+}
+.landing-info {
+  text-align: right;
+}
+.character-container {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  margin-bottom: -100vh;
+  z-index: 4;
+  pointer-events: none;
+}
+.character-model,
+.character-model canvas {
+  width: 100%;
+  height: 100%;
+}
+@media (max-width: 1024px) {
+  .landing-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  .landing-info {
+    text-align: center;
+  }
+}

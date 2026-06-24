@@ -1,0 +1,1 @@
+:root{--scene-intro:0;--scene-desk:0;--scene-exit:0}.character-model{transform:translateY(calc(var(--scene-exit) * -100%))}.landing-container{opacity:calc(1 - var(--scene-intro))}.about-section{opacity:calc(1 - var(--scene-desk))}.what-box-in{opacity:var(--scene-desk)}

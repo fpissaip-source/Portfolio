@@ -1,0 +1,6 @@
+* { box-sizing: border-box; }
+html { background: #0b080c; color: white; }
+body { margin: 0; background: #0b080c; color: white; font-family: Arial, sans-serif; }
+a { color: inherit; }
+:root { --accentColor: #a875ff; --cWidth: 90%; --vh: 100vh; }
+.section-container { width: var(--cWidth); margin-left: auto; margin-right: auto; }
