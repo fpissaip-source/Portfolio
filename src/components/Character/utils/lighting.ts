@@ -2,58 +2,52 @@ import * as THREE from "three";
 import { RGBELoader } from "three-stdlib";
 import { gsap } from "gsap";
 
+const HDR_URL =
+  "https://media.githubusercontent.com/media/MoncyDev/Portfolio-Website/main/public/models/char_enviorment.hdr";
+
 const setLighting = (scene: THREE.Scene) => {
-  const directionalLight = new THREE.DirectionalLight(0xc7a9ff, 0);
-  directionalLight.intensity = 0;
-  directionalLight.position.set(-0.47, -0.32, -1);
+  const hemisphere = new THREE.HemisphereLight(0xd8ccff, 0x241829, 1.25);
+  scene.add(hemisphere);
+
+  const directionalLight = new THREE.DirectionalLight(0xffd7c2, 0.75);
+  directionalLight.position.set(-2.5, 5, 6);
   directionalLight.castShadow = true;
-  directionalLight.shadow.mapSize.width = 1024;
-  directionalLight.shadow.mapSize.height = 1024;
-  directionalLight.shadow.camera.near = 0.5;
-  directionalLight.shadow.camera.far = 50;
   scene.add(directionalLight);
+
+  const rimLight = new THREE.DirectionalLight(0xa875ff, 1.35);
+  rimLight.position.set(4, 2, -5);
+  scene.add(rimLight);
 
   const pointLight = new THREE.PointLight(0xc2a4ff, 0, 100, 3);
   pointLight.position.set(3, 12, 4);
-  pointLight.castShadow = true;
   scene.add(pointLight);
 
+  let lightsOn = false;
   new RGBELoader().load(
-    "https://raw.githubusercontent.com/MoncyDev/Portfolio-Website/main/public/models/char_enviorment.hdr",
-    function (texture) {
+    HDR_URL,
+    (texture) => {
       texture.mapping = THREE.EquirectangularReflectionMapping;
       scene.environment = texture;
-      scene.environmentIntensity = 0;
+      scene.environmentIntensity = lightsOn ? 0.72 : 0.22;
       scene.environmentRotation.set(5.76, 85.85, 1);
-    });
-
-  function setPointLight(screenLight: any) {
-    if (!screenLight?.material) return;
-    if (screenLight.material.opacity > 0.9) {
-      pointLight.intensity = screenLight.material.emissiveIntensity * 20;
-    } else {
-      pointLight.intensity = 0;
+    },
+    undefined,
+    () => {
+      scene.environmentIntensity = 0.45;
     }
+  );
+
+  function setPointLight(screenLight: THREE.Mesh | null) {
+    const material = screenLight?.material as THREE.MeshStandardMaterial | undefined;
+    pointLight.intensity = material && material.opacity > 0.75
+      ? Math.max(3, material.emissiveIntensity * 6)
+      : 0;
   }
-  const duration = 2;
-  const ease = "power2.inOut";
+
   function turnOnLights() {
-    gsap.to(scene, {
-      environmentIntensity: 0.64,
-      duration: duration,
-      ease: ease,
-    });
-    gsap.to(directionalLight, {
-      intensity: 1,
-      duration: duration,
-      ease: ease,
-    });
-    gsap.to(".character-rim", {
-      y: "55%",
-      opacity: 1,
-      delay: 0.2,
-      duration: 2,
-    });
+    lightsOn = true;
+    gsap.to(scene, { environmentIntensity: 0.72, duration: 1.4, ease: "power2.out" });
+    gsap.to(".character-rim", { y: "55%", opacity: 0.8, duration: 1.5 });
   }
 
   return { setPointLight, turnOnLights };

@@ -10,6 +10,7 @@ import SocialIcons from "./SocialIcons";
 import WhatIDo from "./WhatIDo";
 import Work from "./Work";
 import setSplitText from "./utils/splitText";
+import "../styles/repair.css";
 
 const TechStack = lazy(() => import("./TechStack"));
 
@@ -17,7 +18,6 @@ const MainContainer = ({ children }: PropsWithChildren) => {
   const isTouchDevice =
     typeof window !== "undefined" &&
     (navigator.maxTouchPoints > 0 || window.matchMedia("(pointer: coarse)").matches);
-
   const [isDesktopView, setIsDesktopView] = useState(window.innerWidth > 1024);
 
   useEffect(() => {
@@ -25,7 +25,6 @@ const MainContainer = ({ children }: PropsWithChildren) => {
       setSplitText();
       setIsDesktopView(window.innerWidth > 1024);
     };
-
     resizeHandler();
     window.addEventListener("resize", resizeHandler);
     return () => window.removeEventListener("resize", resizeHandler);
@@ -36,10 +35,7 @@ const MainContainer = ({ children }: PropsWithChildren) => {
       {!isTouchDevice && <Cursor />}
       <Navbar />
       <SocialIcons />
-
-      {/* The Three.js layer stays outside ScrollSmoother on every device. */}
       {children}
-
       <div id="smooth-wrapper">
         <div id="smooth-content">
           <div className="container-main">
@@ -50,7 +46,7 @@ const MainContainer = ({ children }: PropsWithChildren) => {
             <Work />
             {isDesktopView && (
               <ErrorBoundary>
-                <Suspense fallback={<div>Loading....</div>}>
+                <Suspense fallback={null}>
                   <TechStack />
                 </Suspense>
               </ErrorBoundary>
