@@ -20,6 +20,7 @@
   display: flex;
   justify-content: space-between;
   gap: 40px;
+  will-change: transform, opacity;
 }
 .career-info-in,
 .career-info-box > p {
@@ -41,26 +42,55 @@
   color: var(--accentColor);
 }
 .career-timeline {
+  --career-progress: 0;
   position: absolute;
   left: 50%;
   top: -25px;
   width: 2px;
   height: 100%;
-  background: #7f40ff;
+  max-height: none !important;
+  opacity: 1 !important;
+  overflow: visible;
+  background: rgba(127, 64, 255, 0.18) !important;
+}
+.career-timeline::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  width: 100%;
+  height: calc(var(--career-progress) * 100%);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #7f40ff 0%, #a26bff 72%, #c49cff 100%);
+  box-shadow: 0 0 8px rgba(154, 101, 255, 0.55);
+  will-change: height;
 }
 .career-dot {
   position: absolute;
-  bottom: 0;
+  top: calc(var(--career-progress) * 100%) !important;
+  bottom: auto !important;
   left: 50%;
   width: 10px;
   height: 10px;
   border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: clamp(0, calc(var(--career-progress) * 5), 1);
   background: #b784ff;
+  box-shadow: 0 0 7px 2px rgba(183, 132, 255, 0.8),
+    0 0 22px 6px rgba(127, 64, 255, 0.4);
+  will-change: top;
 }
 @media (max-width: 900px) {
-  .career-section { padding: 90px 0; }
-  .career-info-box { flex-direction: column; }
+  .career-section {
+    padding: 90px 0;
+  }
+  .career-info-box {
+    flex-direction: column;
+  }
   .career-info-in,
-  .career-info-box > p { width: 100%; }
-  .career-timeline { left: 4px; }
+  .career-info-box > p {
+    width: 100%;
+  }
+  .career-timeline {
+    left: 4px;
+  }
 }
