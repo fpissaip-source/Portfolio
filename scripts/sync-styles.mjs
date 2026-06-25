@@ -5,8 +5,6 @@ const repositoryRoot =
   "https://raw.githubusercontent.com/MoncyDev/Portfolio-Website/main";
 
 const sources = [
-  "src/index.css",
-  "src/App.css",
   "src/components/styles/style.css",
   "src/components/styles/Navbar.css",
   "src/components/styles/SocialIcons.css",
