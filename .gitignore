@@ -9,3 +9,4 @@ dist/
 public/models/character.glb
 public/models/character.enc
 public/models/char_enviorment.hdr
+src/styles/generated-components.css
