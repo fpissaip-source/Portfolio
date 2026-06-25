@@ -9,7 +9,7 @@ const Career = () => {
           <br /> experience
         </h2>
         <div className="career-info">
-          <div className="career-timeline">
+          <div className="career-timeline" aria-hidden="true">
             <div className="career-dot"></div>
           </div>
           <div className="career-info-box">
@@ -21,23 +21,23 @@ const Career = () => {
               <h3>2023</h3>
             </div>
             <p>
-              Aufbau von Lukas AI, TikTok-Affiliate (@lucy_srg) und StudyForge.
-              Autonome Systeme, digitale Produkte und Content-Maschinen, die
-              unabhängig von Zeit und Ort Einnahmen generieren.
+              Aufbau von Lukas AI, TikTok-Affiliate und StudyForge. Autonome
+              Systeme, digitale Produkte und Content-Maschinen, die unabhängig
+              von Zeit und Ort Einnahmen generieren.
             </p>
           </div>
           <div className="career-info-box">
             <div className="career-info-in">
               <div className="career-role">
                 <h4>TikTok Affiliate</h4>
-                <h5>Content Creator — @lucy_srg</h5>
+                <h5>Content Creator</h5>
               </div>
               <h3>2023</h3>
             </div>
             <p>
-              Viraler Content mit 1,8 Millionen Views und 103 Verkäufen.
-              Strategischer Einsatz von TikTok-Algorithmen zur automatisierten
-              Reichweite und passiven Einnahmen.
+              Bereits im ersten Monat erzielte der Content 1,8 Millionen Views
+              und 103 Verkäufe. Strategischer Einsatz von TikTok-Algorithmen
+              für automatisierte Reichweite und messbare Ergebnisse.
             </p>
           </div>
           <div className="career-info-box">
