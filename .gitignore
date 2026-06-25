@@ -6,3 +6,6 @@ dist/
 .DS_Store
 *.log
 .tsbuildinfo
+public/models/character.glb
+public/models/character.enc
+public/models/char_enviorment.hdr
