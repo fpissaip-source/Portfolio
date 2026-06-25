@@ -1,44 +1,27 @@
 import * as THREE from "three";
-import { DRACOLoader, GLTF, GLTFLoader } from "three-stdlib";
-
-const MODEL_URL =
-  "https://media.githubusercontent.com/media/MoncyDev/Portfolio-Website/main/public/models/character.glb";
+import type { GLTF } from "three-stdlib";
+import createIssaCharacter from "./createIssaCharacter";
 
 const setCharacter = (
   renderer: THREE.WebGLRenderer,
   scene: THREE.Scene,
   camera: THREE.PerspectiveCamera
 ) => {
-  const loader = new GLTFLoader();
-  const dracoLoader = new DRACOLoader();
-  dracoLoader.setDecoderPath(
-    "https://www.gstatic.com/draco/versioned/decoders/1.5.7/"
-  );
-  loader.setDRACOLoader(dracoLoader);
+  const loadCharacter = async (): Promise<GLTF> => {
+    const gltf = createIssaCharacter();
+    const character = gltf.scene;
 
-  const loadCharacter = () =>
-    new Promise<GLTF>((resolve, reject) => {
-      loader.load(
-        MODEL_URL,
-        async (gltf) => {
-          const character = gltf.scene;
-          await renderer.compileAsync(character, camera, scene);
-          character.traverse((child: any) => {
-            if (child.isMesh) {
-              child.castShadow = true;
-              child.receiveShadow = true;
-              child.frustumCulled = true;
-            }
-          });
-          character.getObjectByName("footR")?.position.setY(3.36);
-          character.getObjectByName("footL")?.position.setY(3.36);
-          dracoLoader.dispose();
-          resolve(gltf);
-        },
-        undefined,
-        reject
-      );
+    character.traverse((child) => {
+      if (child instanceof THREE.Mesh) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+        child.frustumCulled = true;
+      }
     });
+
+    await renderer.compileAsync(character, camera, scene);
+    return gltf;
+  };
 
   return { loadCharacter };
 };
