@@ -10,14 +10,13 @@ const Contact = () => {
           <div className="contact-box">
             <h4>GitHub</h4>
             <p>
-              <a href="https://github.com/fpissaip-source" target="_blank" data-cursor="disable">
+              <a
+                href="https://github.com/fpissaip-source"
+                target="_blank"
+                rel="noreferrer"
+                data-cursor="disable"
+              >
                 github.com/fpissaip-source
-              </a>
-            </p>
-            <h4>TikTok</h4>
-            <p>
-              <a href="https://www.tiktok.com/@lucy_srg" target="_blank" data-cursor="disable">
-                @lucy_srg
               </a>
             </p>
           </div>
@@ -26,6 +25,7 @@ const Contact = () => {
             <a
               href="https://github.com/fpissaip-source"
               target="_blank"
+              rel="noreferrer"
               data-cursor="disable"
               className="contact-social"
             >
@@ -34,18 +34,11 @@ const Contact = () => {
             <a
               href="[LINKEDIN]"
               target="_blank"
+              rel="noreferrer"
               data-cursor="disable"
               className="contact-social"
             >
               LinkedIn <MdArrowOutward />
-            </a>
-            <a
-              href="https://www.tiktok.com/@lucy_srg"
-              target="_blank"
-              data-cursor="disable"
-              className="contact-social"
-            >
-              TikTok <MdArrowOutward />
             </a>
           </div>
           <div className="contact-box">
@@ -54,7 +47,7 @@ const Contact = () => {
               <br /> AI Developer & Creator
             </h2>
             <h5>
-              <MdCopyright /> 2025 — Deutschland
+              <MdCopyright /> 2026 — Deutschland
             </h5>
           </div>
         </div>
