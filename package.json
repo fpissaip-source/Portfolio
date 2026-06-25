@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "sync:models": "node scripts/sync-models.mjs",
-    "predev": "npm run sync:models",
+    "sync:styles": "node scripts/sync-styles.mjs",
+    "sync:resources": "npm run sync:models && npm run sync:styles",
+    "predev": "npm run sync:resources",
     "dev": "vite --host 0.0.0.0",
-    "prebuild": "npm run sync:models",
+    "prebuild": "npm run sync:resources",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 0.0.0.0",
     "start": "vite preview --host 0.0.0.0 --port ${PORT:-4173}",
