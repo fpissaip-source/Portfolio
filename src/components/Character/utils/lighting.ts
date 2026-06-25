@@ -2,8 +2,7 @@ import * as THREE from "three";
 import { RGBELoader } from "three-stdlib";
 import { gsap } from "gsap";
 
-const HDR_URL =
-  "https://media.githubusercontent.com/media/MoncyDev/Portfolio-Website/main/public/models/char_enviorment.hdr";
+const HDR_URL = `${import.meta.env.BASE_URL}models/char_enviorment.hdr`;
 
 const setLighting = (scene: THREE.Scene) => {
   const hemisphere = new THREE.HemisphereLight(0xd8ccff, 0x241829, 1.25);
@@ -39,15 +38,24 @@ const setLighting = (scene: THREE.Scene) => {
 
   function setPointLight(screenLight: THREE.Mesh | null) {
     const material = screenLight?.material as THREE.MeshStandardMaterial | undefined;
-    pointLight.intensity = material && material.opacity > 0.75
-      ? Math.max(3, material.emissiveIntensity * 6)
-      : 0;
+    pointLight.intensity =
+      material && material.opacity > 0.75
+        ? Math.max(3, material.emissiveIntensity * 6)
+        : 0;
   }
 
   function turnOnLights() {
     lightsOn = true;
-    gsap.to(scene, { environmentIntensity: 0.72, duration: 1.4, ease: "power2.out" });
-    gsap.to(".character-rim", { y: "55%", opacity: 0.8, duration: 1.5 });
+    gsap.to(scene, {
+      environmentIntensity: 0.72,
+      duration: 1.4,
+      ease: "power2.out",
+    });
+    gsap.to(".character-rim", {
+      y: "55%",
+      opacity: 0.8,
+      duration: 1.5,
+    });
   }
 
   return { setPointLight, turnOnLights };

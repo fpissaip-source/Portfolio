@@ -4,7 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "sync:models": "node scripts/sync-models.mjs",
+    "predev": "npm run sync:models",
     "dev": "vite --host 0.0.0.0",
+    "prebuild": "npm run sync:models",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 0.0.0.0",
     "start": "vite preview --host 0.0.0.0 --port ${PORT:-4173}",
