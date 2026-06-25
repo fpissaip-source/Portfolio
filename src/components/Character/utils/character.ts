@@ -1,8 +1,7 @@
 import * as THREE from "three";
 import { DRACOLoader, GLTF, GLTFLoader } from "three-stdlib";
 
-const MODEL_URL =
-  "https://media.githubusercontent.com/media/MoncyDev/Portfolio-Website/main/public/models/character.glb";
+const MODEL_URL = `${import.meta.env.BASE_URL}models/character.glb`;
 
 const setCharacter = (
   renderer: THREE.WebGLRenderer,
