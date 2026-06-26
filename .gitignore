@@ -6,6 +6,4 @@ dist/
 .DS_Store
 *.log
 .tsbuildinfo
-public/models/character.glb
-public/models/char_enviorment.hdr
 src/styles/generated-components.css
