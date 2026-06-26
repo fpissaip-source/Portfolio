@@ -10,7 +10,6 @@ import SocialIcons from "./SocialIcons";
 import WhatIDo from "./WhatIDo";
 import Work from "./Work";
 import setSplitText from "./utils/splitText";
-import "../styles/repair.css";
 
 const TechStack = lazy(() => import("./TechStack"));
 
@@ -18,7 +17,10 @@ const MainContainer = ({ children }: PropsWithChildren) => {
   const isTouchDevice =
     typeof window !== "undefined" &&
     (navigator.maxTouchPoints > 0 || window.matchMedia("(pointer: coarse)").matches);
-  const [isDesktopView, setIsDesktopView] = useState(window.innerWidth > 1024);
+
+  const [isDesktopView, setIsDesktopView] = useState<boolean>(
+    window.innerWidth > 1024
+  );
 
   useEffect(() => {
     const resizeHandler = () => {
@@ -27,26 +29,28 @@ const MainContainer = ({ children }: PropsWithChildren) => {
     };
     resizeHandler();
     window.addEventListener("resize", resizeHandler);
-    return () => window.removeEventListener("resize", resizeHandler);
-  }, []);
+    return () => {
+      window.removeEventListener("resize", resizeHandler);
+    };
+  }, [isDesktopView]);
 
   return (
     <div className="container-main">
       {!isTouchDevice && <Cursor />}
       <Navbar />
       <SocialIcons />
-      {children}
+      {isDesktopView && children}
       <div id="smooth-wrapper">
         <div id="smooth-content">
           <div className="container-main">
-            <Landing />
+            <Landing>{!isDesktopView && children}</Landing>
             <About />
             <WhatIDo />
             <Career />
             <Work />
             {isDesktopView && (
               <ErrorBoundary>
-                <Suspense fallback={null}>
+                <Suspense fallback={<div>Loading....</div>}>
                   <TechStack />
                 </Suspense>
               </ErrorBoundary>
