@@ -8,30 +8,28 @@ interface Props {
   link?: string;
 }
 
-const WorkImage = ({ image, alt, video, link }: Props) => {
-  const [showVideo, setShowVideo] = useState(false);
+const WorkImage = (props: Props) => {
+  const [isVideo, setIsVideo] = useState(false);
 
   return (
     <div className="work-image">
       <a
         className="work-image-in"
-        href={link || "#work"}
-        target={link ? "_blank" : undefined}
-        rel={link ? "noopener noreferrer" : undefined}
-        data-cursor="disable"
-        onMouseEnter={() => video && setShowVideo(true)}
-        onMouseLeave={() => setShowVideo(false)}
-        onFocus={() => video && setShowVideo(true)}
-        onBlur={() => setShowVideo(false)}
+        href={props.link}
+        onMouseEnter={() => props.video && setIsVideo(true)}
+        onMouseLeave={() => setIsVideo(false)}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-cursor={"disable"}
       >
-        {link && (
-          <div className="work-link" aria-hidden="true">
+        {props.link && (
+          <div className="work-link">
             <MdArrowOutward />
           </div>
         )}
-        <img src={image} alt={alt || "Projektvorschau"} loading="lazy" />
-        {showVideo && video && (
-          <video src={video} autoPlay muted playsInline loop preload="metadata" />
+        <img src={props.image} alt={props.alt} />
+        {isVideo && props.video && (
+          <video src={props.video} autoPlay muted playsInline loop></video>
         )}
       </a>
     </div>
