@@ -4,44 +4,41 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.registerPlugin(useGSAP);
 
 const Work = () => {
   useGSAP(() => {
     if (window.innerWidth <= 1024) return;
 
-    const boxes = Array.from(document.querySelectorAll<HTMLElement>(".work-box"));
-    const container = document.querySelector<HTMLElement>(".work-container");
-    const flex = document.querySelector<HTMLElement>(".work-flex");
+    let translateX: number = 0;
 
-    if (!boxes.length || !container || !flex) return;
+    function setTranslateX() {
+      const box = document.getElementsByClassName("work-box");
+      const rectLeft = document
+        .querySelector(".work-container")!
+        .getBoundingClientRect().left;
+      const rect = box[0].getBoundingClientRect();
+      const parentWidth = box[0].parentElement!.getBoundingClientRect().width;
+      let padding: number =
+        parseInt(window.getComputedStyle(box[0]).padding) / 2;
+      translateX = rect.width * box.length - (rectLeft + parentWidth) + padding;
+    }
 
-    const calculateDistance = () => {
-      const firstBox = boxes[0].getBoundingClientRect();
-      const containerRect = container.getBoundingClientRect();
-      const totalWidth = firstBox.width * boxes.length;
-      return Math.max(0, totalWidth - containerRect.width);
-    };
+    setTranslateX();
 
-    let distance = calculateDistance();
-
-    const timeline = gsap.timeline({
+    let timeline = gsap.timeline({
       scrollTrigger: {
         trigger: ".work-section",
         start: "top top",
-        end: () => `+=${distance}`,
+        end: `+=${translateX}`,
         scrub: true,
         pin: true,
-        invalidateOnRefresh: true,
         id: "work",
-        onRefresh: () => {
-          distance = calculateDistance();
-        },
       },
     });
 
-    timeline.to(flex, {
-      x: () => -distance,
+    timeline.to(".work-flex", {
+      x: -translateX,
       ease: "none",
     });
 
@@ -68,14 +65,10 @@ const Work = () => {
                 </div>
               </div>
               <h4>Features</h4>
-              <p>
-                Persistentes Gedächtnis, Zielverfolgung, Tagebuch, SSE-Chat und
-                autonome Workflows.
-              </p>
+              <p>Persistentes Gedächtnis, Zielverfolgung, Tagebuch, SSE-Chat, Higgsfield Studio</p>
             </div>
             <WorkImage image="/images/placeholder.webp" alt="Lukas AI" />
           </div>
-
           <div className="work-box">
             <div className="work-info">
               <div className="work-title">
@@ -86,48 +79,39 @@ const Work = () => {
                 </div>
               </div>
               <h4>Features</h4>
-              <p>
-                PDF-Analyse, Zusammenfassungen, Quiz-Generierung und
-                Mock-Klausuren in einer modernen Lernplattform.
-              </p>
+              <p>PDF-Upload, KI-Analyse, Quiz-Generierung, React, Node.js, OpenAI</p>
             </div>
             <WorkImage image="/images/placeholder.webp" alt="StudyForge" />
           </div>
-
           <div className="work-box">
             <div className="work-info">
               <div className="work-title">
                 <h3>03</h3>
                 <div>
-                  <h4>TikTok Affiliate</h4>
-                  <p>Content & Performance</p>
+                  <h4>TikTok @lucy_srg</h4>
+                  <p>Affiliate & Content</p>
                 </div>
               </div>
               <h4>Results</h4>
-              <p>
-                1,8 Millionen Views und 103 Verkäufe bereits im ersten Monat.
-              </p>
+              <p>1,8M Views — 103 Verkäufe — TikTok Affiliate Marketing Strategy</p>
             </div>
-            <WorkImage image="/images/placeholder.webp" alt="TikTok Affiliate Projekt" />
+            <WorkImage image="/images/placeholder.webp" alt="TikTok @lucy_srg" />
           </div>
-
           <div className="work-box">
             <div className="work-info">
               <div className="work-title">
                 <h3>04</h3>
                 <div>
-                  <h4>B&amp;B Taxi-Service Essen</h4>
+                  <h4>B&B Taxi-Service Essen</h4>
                   <p>Business Website</p>
                 </div>
               </div>
               <h4>Features</h4>
-              <p>
-                SEO-Landingpages, Buchungsanfragen, Service-Übersicht und
-                responsives Webdesign.
-              </p>
+              <p>Online-Anfragen, Service-Übersicht, Kundenbewertungen, responsives Design</p>
             </div>
             <WorkImage
-              image="/images/placeholder.webp"
+              image={`${import.meta.env.BASE_URL}images/taxi-bb-poster.jpg`}
+              video={`${import.meta.env.BASE_URL}videos/taxi-bb.mp4`}
               alt="B&B Taxi-Service Essen"
               link="https://taxibbessen.de"
             />
