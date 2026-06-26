@@ -1,7 +1,43 @@
-name: Test
-on: workflow_dispatch
+name: Sync character files
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/test.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
 jobs:
-  test:
+  sync:
     runs-on: ubuntu-latest
     steps:
-      - run: echo ok
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Copy uploaded character implementation
+        run: |
+          mkdir -p src/components/Character/utils
+          cp src/components/CharacterModel/Scene.tsx src/components/Character/Scene.tsx
+          cp src/components/CharacterModel/utils/character.ts src/components/Character/utils/character.ts
+          cp src/components/CharacterModel/utils/animationUtils.ts src/components/Character/utils/animationUtils.ts
+          cp src/components/CharacterModel/utils/lighting.ts src/components/Character/utils/lighting.ts
+          cp src/components/CharacterModel/utils/mouseUtils.ts src/components/Character/utils/mouseUtils.ts
+          cp src/components/CharacterModel/utils/resizeUtils.ts src/components/Character/utils/resizeUtils.ts
+          cp src/components/CharacterModel/utils/decrypt.ts src/components/Character/utils/decrypt.ts
+          printf '%s\n' 'import Scene from "./Scene";' '' 'const Character = () => <Scene />;' '' 'export default Character;' > src/components/Character/index.tsx
+          node scripts/sync-models.mjs
+
+      - name: Commit synced files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Sync complete character implementation
+          file_pattern: src/components/Character public/models
