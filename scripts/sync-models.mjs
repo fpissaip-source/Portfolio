@@ -1,4 +1,4 @@
-import { createHash } from "node:crypto";
+import { createCipheriv, createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 
@@ -18,6 +18,12 @@ const assets = [
     sha256: "366401083df3216cf9dd21d113d1d02c5f55d474ee9ffa121af1486a5396eccf",
   },
 ];
+
+const encryptedAsset = {
+  name: "character.enc",
+  sha256: "727391097c9c122211f7e3f5e18f219765f15450abb7f49be15b5703500476b7",
+  iv: "70135c02ed9aa2706c61a5d61051e6e1",
+};
 
 const digest = (buffer) =>
   createHash("sha256").update(buffer).digest("hex");
@@ -65,4 +71,37 @@ for (const asset of assets) {
 
   await writeFile(target, buffer);
   console.log(`✓ ${asset.name} downloaded and verified`);
+}
+
+const characterPath = fileURLToPath(
+  new URL("../public/models/character.glb", import.meta.url)
+);
+const encryptedPath = fileURLToPath(
+  new URL("../public/models/character.enc", import.meta.url)
+);
+
+if (!(await hasValidLocalCopy(encryptedPath, encryptedAsset.sha256))) {
+  const character = await readFile(characterPath);
+  const key = createHash("sha256")
+    .update("Character3D" + "#@")
+    .digest();
+  const iv = Buffer.from(encryptedAsset.iv, "hex");
+  const cipher = createCipheriv("aes-256-cbc", key, iv);
+  const encrypted = Buffer.concat([
+    iv,
+    cipher.update(character),
+    cipher.final(),
+  ]);
+
+  const actualHash = digest(encrypted);
+  if (actualHash !== encryptedAsset.sha256) {
+    throw new Error(
+      `${encryptedAsset.name} failed checksum validation. Expected ${encryptedAsset.sha256}, received ${actualHash}.`
+    );
+  }
+
+  await writeFile(encryptedPath, encrypted);
+  console.log(`✓ ${encryptedAsset.name} generated and verified`);
+} else {
+  console.log(`✓ ${encryptedAsset.name} already verified`);
 }
