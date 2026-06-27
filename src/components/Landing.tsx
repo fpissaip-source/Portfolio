@@ -1,4 +1,6 @@
-const Landing = () => {
+import type { PropsWithChildren } from "react";
+
+const Landing = ({ children }: PropsWithChildren) => {
   return (
     <div className="landing-section" id="landingDiv">
       <div className="landing-container">
@@ -12,6 +14,7 @@ const Landing = () => {
           <h2 className="landing-role landing-role-secondary">Creator</h2>
         </div>
       </div>
+      {children}
     </div>
   );
 };
