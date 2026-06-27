@@ -14,7 +14,7 @@ const assets = [
   },
   {
     name: "char_enviorment.hdr",
-    url: "https://media.githubusercontent.com/media/MoncyDev/Portfolio-Website/main/public/models/char_enviorment.hdr",
+    url: "https://raw.githubusercontent.com/MoncyDev/Portfolio-Website/main/public/models/char_enviorment.hdr",
     sha256: "366401083df3216cf9dd21d113d1d02c5f55d474ee9ffa121af1486a5396eccf",
   },
 ];
